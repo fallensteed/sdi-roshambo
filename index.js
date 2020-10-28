@@ -10,7 +10,7 @@ class Game{
     runGame(){
         if (this.player === this.computer) {
             return '~The game is a tie.~';
-        } else if((player === 'rock' && computer === 'paper') || (player === 'paper' && computer === 'scissors') || (player === 'scissors' && computer === 'rock')){
+        } else if((this.player === 'rock' && this.computer === 'paper') || (this.player === 'paper' && this.computer === 'scissors') || (this.player === 'scissors' && this.computer === 'rock')){
             return '~Computer wins.~';
         } else {
             return '~Player wins.~';
@@ -24,9 +24,9 @@ class Player{
     }
     test(){
         if(this.selection !== 'rock' && this.selection !== 'paper' && this.selection !== 'scissors'){
-            return 'You must select rock, paper, or scissors.';
+            return false;
         } else {
-            return `Player plays ${this.selection}!`;
+            return true;
         }
     }
 }
@@ -46,7 +46,11 @@ console.log('Playing a game of Roshambo against the computer.');
 let selection = argv.move;
 const player = new Player(selection);
 const computer = new Computer();
-console.log(player.test());
-console.log(computer.engage());
-const theGame = new Game(player, computer);
-console.log(theGame.runGame());
+if(player.test()){
+    console.log(`Player plays ${player.selection}!`);
+    console.log(computer.engage());
+    const theGame = new Game(player.selection, computer.selection);
+    console.log(theGame.runGame());
+} else {
+    console.log('You must enter "Rock", "Paper", or "Scissors" to play!');
+}
